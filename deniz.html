@@ -79,21 +79,21 @@
         /* Sağ Üst Tema Paleti Menüsü */
         .theme-selector {
             position: fixed;
-            top: 25px;
-            right: 25px;
+            top: 20px;
+            right: 20px;
             z-index: 10;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             background: rgba(10, 25, 50, 0.6);
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 14px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .theme-dot {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -119,8 +119,9 @@
             justify-content: space-between;
             align-items: center;
             color: #ffffff;
-            padding: 45px 0;
+            padding: 30px 15px;
             transition: opacity 0.4s ease, transform 0.4s ease;
+            overflow-y: auto;
         }
 
         .center-screen {
@@ -133,8 +134,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             z-index: 1;
+            padding: 15px;
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
@@ -148,18 +150,20 @@
         /* Üst Neon Butonlar Alanı */
         .menu-buttons {
             display: flex;
-            gap: 15px;
-            margin-top: 5px;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
         }
 
         .neon-btn {
             background: var(--btn-bg);
-            padding: 16px 30px;
-            border-radius: 18px;
+            padding: 12px 20px;
+            border-radius: 16px;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--primary-glow);
-            box-shadow: 0 0 25px var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -167,28 +171,28 @@
 
         .neon-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 40px var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color);
         }
 
         .neon-title {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
             color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
         .neon-text {
-            font-size: 1.3rem;
-            letter-spacing: 3px;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
             color: var(--primary-color);
-            text-shadow: 0 0 15px var(--primary-glow);
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
-        /* Ana Sayfa Saat Kutusu */
+        /* Ana Sayfa Saat Kutusu - Telefona Uyumlu Hale Getirildi */
         .glass-box {
             background: var(--box-bg);
-            padding: 30px 60px;
+            padding: 25px 30px;
             border-radius: 24px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
                         0 0 30px var(--primary-glow);
@@ -196,53 +200,58 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             text-align: center;
+            width: 100%;
+            max-width: 480px;
         }
 
         #digital-clock {
-            font-size: 4.5rem;
+            font-size: clamp(2.5rem, 10vw, 4.2rem);
             font-weight: 900;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             color: #ffffff;
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 
-                         0 0 50px var(--primary-color);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 
+                         0 0 40px var(--primary-color);
         }
 
         /* En Alttaki Şık Yazı */
         .greeting {
-            font-size: 1.2rem;
+            font-size: 1rem;
             letter-spacing: 3px;
             color: rgba(255, 255, 255, 0.9);
             text-shadow: 0 0 15px var(--primary-glow);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         /* LGS Sayacı Kutusu */
         .lgs-display-box {
             background: var(--box-bg);
-            padding: 40px 70px;
+            padding: 30px 20px;
             border-radius: 24px;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--primary-glow);
             box-shadow: 0 0 40px var(--primary-glow);
             text-align: center;
+            width: 100%;
+            max-width: 450px;
         }
 
         #lgs-countdown {
-            font-size: 2.3rem;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             color: var(--primary-color);
             text-shadow: 0 0 20px var(--primary-glow);
+            margin-top: 10px;
         }
 
         .back-btn {
             background: rgba(255, 255, 255, 0.08);
             color: rgba(255, 255, 255, 0.85);
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 12px;
-            font-size: 0.95rem;
-            letter-spacing: 3px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             font-family: 'Orbitron', sans-serif;
@@ -257,7 +266,7 @@
             transform: scale(1.05);
         }
 
-        /* Shorts Modal (Açılır Pencere) Stilleri */
+        /* Shorts Modal (Açılır Pencere) Stilleri - Telefona Uyumlu */
         .shorts-modal {
             position: fixed;
             top: 0;
@@ -270,13 +279,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .shorts-content {
             position: relative;
-            width: 315px;
-            height: 560px;
+            width: 100%;
+            max-width: 315px;
+            height: 80vh;
+            max-height: 560px;
             background: #000;
             border-radius: 20px;
             overflow: hidden;
@@ -438,7 +450,6 @@
             const modal = document.getElementById('shorts-modal');
             const iframe = document.getElementById('shorts-iframe');
             
-            // Eklediğin ID ile güncellenmiş Shorts URL'si
             iframe.src = "https://www.youtube.com/embed/-kND31dhRpI?autoplay=1"; 
             
             modal.classList.remove('hidden');
@@ -449,7 +460,7 @@
             const iframe = document.getElementById('shorts-iframe');
             
             modal.classList.add('hidden');
-            iframe.src = ""; // Kapatınca video arka planda çalışmasın diye sıfırlanır
+            iframe.src = ""; 
         }
     </script>
 </body>
