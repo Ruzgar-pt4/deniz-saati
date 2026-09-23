@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deniz İçin Özel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Tema Renk Değişkenleri */
+        :root {
+            --primary-color: #00d2ff;
+            --primary-glow: rgba(0, 210, 255, 0.8);
+            --box-bg: rgba(8, 20, 40, 0.65);
+            --btn-bg: rgba(10, 25, 50, 0.7);
+        }
+
+        [data-theme="green"] {
+            --primary-color: #00ff66;
+            --primary-glow: rgba(0, 255, 102, 0.8);
+            --box-bg: rgba(5, 25, 12, 0.65);
+            --btn-bg: rgba(8, 40, 18, 0.7);
+        }
+
+        [data-theme="purple"] {
+            --primary-color: #d400ff;
+            --primary-glow: rgba(212, 0, 255, 0.8);
+            --box-bg: rgba(25, 5, 35, 0.65);
+            --btn-bg: rgba(40, 8, 55, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Video Arka Plan */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 100vh;
+            min-width: 177.77vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 10, 25, 0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Sağ Üst Tema Paleti Menüsü */
+        .theme-selector {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+            background: rgba(10, 25, 50, 0.6);
+            padding: 8px 12px;
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .theme-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .theme-dot:hover {
+            transform: scale(1.2);
+        }
+
+        .dot-blue { background-color: #00d2ff; box-shadow: 0 0 10px #00d2ff; }
+        .dot-green { background-color: #00ff66; box-shadow: 0 0 10px #00ff66; }
+        .dot-purple { background-color: #d400ff; box-shadow: 0 0 10px #d400ff; }
+
+        /* Sayfa İçerik Konteynerleri */
+        .content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            padding: 45px 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .center-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            z-index: 1;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        /* Üst Neon Butonlar Alanı */
+        .menu-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+
+        .neon-btn {
+            background: var(--btn-bg);
+            padding: 16px 30px;
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 25px var(--primary-glow);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .neon-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--primary-color);
+        }
+
+        .neon-title {
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .neon-text {
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            color: var(--primary-color);
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Ana Sayfa Saat Kutusu */
+        .glass-box {
+            background: var(--box-bg);
+            padding: 30px 60px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 
+                        0 0 30px var(--primary-glow);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+        }
+
+        #digital-clock {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 
+                         0 0 50px var(--primary-color);
+        }
+
+        /* En Alttaki Şık Yazı */
+        .greeting {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 15px var(--primary-glow);
+            margin-bottom: 5px;
+        }
+
+        /* LGS Sayacı Kutusu */
+        .lgs-display-box {
+            background: var(--box-bg);
+            padding: 40px 70px;
+            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 40px var(--primary-glow);
+            text-align: center;
+        }
+
+        #lgs-countdown {
+            font-size: 2.3rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Shorts Modal (Açılır Pencere) Stilleri */
+        .shorts-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .shorts-content {
+            position: relative;
+            width: 315px;
+            height: 560px;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--primary-glow);
+            box-shadow: 0 0 50px var(--primary-glow);
+        }
+
+        .shorts-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-shorts {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: var(--btn-bg);
+            color: #fff;
+            border: 1px solid var(--primary-glow);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .close-shorts:hover {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sağ Üst Renk Paleti Butonları -->
+    <div class="theme-selector">
+        <div class="theme-dot dot-blue" onclick="setTheme('blue')" title="Mavi Neon"></div>
+        <div class="theme-dot dot-green" onclick="setTheme('green')" title="Hacker Yeşil"></div>
+        <div class="theme-dot dot-purple" onclick="setTheme('purple')" title="Cyber Mor"></div>
+    </div>
+
+    <!-- Video Arka Plan -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/z977gKXg1_k?si=lLhwRLgwsSsgLIKx&autoplay=1&mute=1&loop=1&controls=0&showinfo=0&playlist=z977gKXg1_k" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+        </iframe>
+    </div>
+    <div class="overlay"></div>
+
+    <!-- 1. ANA SAYFA GÖRÜNÜMÜ -->
+    <div id="home-view" class="content">
+        <div class="menu-buttons">
+            <div class="neon-btn" onclick="showLGS()">
+                <div class="neon-title">SİSTEM MENÜSÜ</div>
+                <div class="neon-text">LGS Sayacı 🚀</div>
+            </div>
+            <div class="neon-btn" onclick="openShorts()">
+                <div class="neon-title">MEDYA</div>
+                <div class="neon-text">Shorts Aç 🎬</div>
+            </div>
+        </div>
+
+        <div class="glass-box">
+            <div id="digital-clock">00:00:00</div>
+        </div>
+
+        <div class="greeting">Deniz için... 🌊</div>
+    </div>
+
+    <!-- 2. LGS SAYACI GÖRÜNÜMÜ -->
+    <div id="lgs-view" class="center-screen hidden">
+        <div class="lgs-display-box">
+            <div class="neon-title">LGS'ye Kalan Süre</div>
+            <div id="lgs-countdown">Yükleniyor...</div>
+        </div>
+        <button class="back-btn" onclick="showHome()">← ANA SAYFAYA DÖN</button>
+    </div>
+
+    <!-- 3. SHORTS VİDEO MODAL (PENCERE) -->
+    <div id="shorts-modal" class="shorts-modal hidden">
+        <div class="shorts-content">
+            <button class="close-shorts" onclick="closeShorts()">KAPAT X</button>
+            <iframe id="shorts-iframe" src="" title="YouTube Shorts" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Tema Değiştirme Fonksiyonu
+        function setTheme(themeName) {
+            if (themeName === 'blue') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', themeName);
+            }
+            localStorage.setItem('preferred-theme', themeName);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('preferred-theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            }
+        });
+
+        // Dijital Saat
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('digital-clock').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // LGS Sayacı
+        const lgsDate = new Date('2027-06-06T09:30:00').getTime();
+
+        function updateLGSCountdown() {
+            const now = new Date().getTime();
+            const distance = lgsDate - now;
+
+            if (distance < 0) {
+                document.getElementById('lgs-countdown').innerText = "LGS Vakti!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hrs = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('lgs-countdown').innerText = `${days} gün ${hrs} sa ${mins} dk ${secs} sn`;
+        }
+
+        setInterval(updateLGSCountdown, 1000);
+        updateLGSCountdown();
+
+        // Ekran Geçişleri
+        function showLGS() {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('lgs-view').classList.remove('hidden');
+        }
+
+        function showHome() {
+            document.getElementById('lgs-view').classList.add('hidden');
+            document.getElementById('home-view').classList.remove('hidden');
+        }
+
+        // Shorts Açma / Kapatma Fonksiyonları
+        function openShorts() {
+            const modal = document.getElementById('shorts-modal');
+            const iframe = document.getElementById('shorts-iframe');
+            
+            // Eklediğin ID ile güncellenmiş Shorts URL'si
+            iframe.src = "https://www.youtube.com/embed/-kND31dhRpI?autoplay=1"; 
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeShorts() {
+            const modal = document.getElementById('shorts-modal');
+            const iframe = document.getElementById('shorts-iframe');
+            
+            modal.classList.add('hidden');
+            iframe.src = ""; // Kapatınca video arka planda çalışmasın diye sıfırlanır
+        }
+    </script>
+</body>
+</html>
